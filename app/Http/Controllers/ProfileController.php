@@ -11,6 +11,11 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function show(User $user)
+    {
+        return view('profile.show', compact('user'));
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -24,17 +29,23 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request, User $user)
     {
-        $request->user()->fill($request->validated());
+        $request->validate([
+            'pirate_name' => 'required|string|max:255',
+            'birthdate' => 'nullable|date',
+            'profile_picture' => 'nullable|image',
+            'about_me' => 'nullable|string',
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('profile_picture')) {
+            $path = $request->file('profile_picture')->store('profile_pictures', 'public');
+            $user->profile_picture = $path;
         }
 
-        $request->user()->save();
+        $user->update($request->only('pirate_name', 'birthdate', 'about_me'));
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile.show', $user)->with('success', 'Profiel bijgewerkt!');
     }
 
     /**
