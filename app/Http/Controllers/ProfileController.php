@@ -2,35 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
-use App\Models\User;
-
 
 class ProfileController extends Controller
 {
-    public function show(User $user)
+    public function show(User $user): View
     {
         return view('profile.show', compact('user'));
     }
 
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = $request->user();
+        return view('profile.edit', compact('user'));
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -50,9 +40,6 @@ class ProfileController extends Controller
         return redirect()->route('profile.show', $user)->with('success', 'Profiel bijgewerkt!');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [

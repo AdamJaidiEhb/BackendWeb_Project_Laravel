@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <h1>Welkom op het Admin Dashboard</h1>
-    <p>Beheer hier je applicatie.</p>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+    <h1>Admin Dashboard</h1>
+    <p>Welkom bij het admin-dashboard. Gebruik de onderstaande links om onderdelen te beheren.</p>
+
+    <h2>Beheer</h2>
+    <ul>
+        <li><a href="{{ route('admin.users') }}">Gebruikers beheren</a></li>
+        <li><a href="{{ route('news.create') }}">Nieuws toevoegen</a></li>
+        <li><a href="{{ route('faq.create') }}">FAQ-item toevoegen</a></li>
+    </ul>
+@endsection
