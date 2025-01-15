@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+
 
 class ProfileController extends Controller
 {
@@ -32,7 +34,7 @@ class ProfileController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'pirate_name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
             'birthdate' => 'nullable|date',
             'profile_picture' => 'nullable|image',
             'about_me' => 'nullable|string',
@@ -43,7 +45,7 @@ class ProfileController extends Controller
             $user->profile_picture = $path;
         }
 
-        $user->update($request->only('pirate_name', 'birthdate', 'about_me'));
+        $user->update($request->only('username', 'birthdate', 'about_me'));
 
         return redirect()->route('profile.show', $user)->with('success', 'Profiel bijgewerkt!');
     }
