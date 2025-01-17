@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
     <h1>Admin Dashboard</h1>
-    <p>Welkom bij het admin-dashboard. Gebruik de onderstaande links om onderdelen te beheren.</p>
-
-    <h2>Beheer</h2>
+    <p>Aantal Nieuwsitems: {{ $newsCount }}</p>
+    <p>Totaal aantal gebruikers: {{ $usersCount }}</p>
     <ul>
         <li><a href="{{ route('admin.users') }}">Gebruikers beheren</a></li>
-        <li><a href="{{ route('news.create') }}">Nieuws toevoegen</a></li>
-        <li><a href="{{ route('faq.create') }}">FAQ-item toevoegen</a></li>
     </ul>
+</div>
 @endsection

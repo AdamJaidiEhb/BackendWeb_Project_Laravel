@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profiel</title>
-</head>
-<body>
-    <h1>{{ $user->username }}</h1>
-    <p>Geboortedatum: {{ $user->birthdate }}</p>
-    <p>Over mij: {{ $user->about_me }}</p>
-    <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('images/default-profile.png') }}" alt="Profielfoto">
-    <a href="{{ route('profile.edit') }}">Profiel bewerken</a>
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h1>Profil de {{ $user->username }}</h1>
+    <p><strong>Email :</strong> {{ $user->email }}</p>
+    <p><strong>Rôle :</strong> {{ $user->role }}</p>
+    <p><strong>Date de naissance :</strong> {{ $user->birthdate ?? 'Non renseignée' }}</p>
+    <p><strong>À propos :</strong> {{ $user->about_me ?? 'Non renseigné' }}</p>
+    <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('images/default-profile.png') }}" alt="Photo de profil" style="max-width: 150px;">
+    @if (Auth::id() === $user->id)
+        <a href="{{ route('profile.edit') }}">Modifier votre profil</a>
+    @endif
+</div>
+@endsection

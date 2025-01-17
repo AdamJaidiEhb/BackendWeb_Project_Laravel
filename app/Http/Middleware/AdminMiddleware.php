@@ -13,6 +13,6 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/')->with('error', 'Toegang geweigerd.');
+        return redirect('/')->with('error', 'Vous n\'avez pas accès à cette section.');
     }
 }
